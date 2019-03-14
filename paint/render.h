@@ -4,6 +4,7 @@
 #define RENDER_H
 
 #include "command.h"
+#include "../object/pointer/pointer.h"
 #include <iostream>
 #include <list>
 #include <math.h>
@@ -13,7 +14,7 @@ using namespace std;
 typedef struct{
     color colours[SCREEN_WIDTH][SCREEN_HEIGHT];        // define all the color of the object
     int width, height;                                 // neff of the object size
-} Object;
+} Pane;
 
 typedef struct{
     color canvas[SCREEN_WIDTH][SCREEN_HEIGHT];         // define all the color on the canvas

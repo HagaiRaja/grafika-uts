@@ -38,8 +38,26 @@ void readMouse(int Z) {
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
 
-//        if(ev.type == 2)
-//            printf("key %i state %i\n", ev.code, ev.value);
+        if(ev.type == 2) {
+            if (ev.code == 0) {
+                mousePosition.x += (double) ev.value;
+                if (mousePosition.x < 0) {
+                    mousePosition.x = 0;
+                }
+                else if (mousePosition.x > SCREEN_WIDTH) {
+                    mousePosition.x = SCREEN_WIDTH;
+                }
+            }
+            else if (ev.code == 1) {
+                mousePosition.y += (double) ev.value;
+                if (mousePosition.y < 0) {
+                    mousePosition.y = 0;
+                }
+                else if (mousePosition.y > SCREEN_HEIGHT) {
+                    mousePosition.y = SCREEN_HEIGHT;
+                }
+            }
+        }
     }
 
     cout << "bye from mouse" << endl;
@@ -57,7 +75,7 @@ void readKeyboard(int Z) {
             // exitting
 //            printf("key %i state %i\n", ev.code, ev.value);
             if (ev.code == 45) {
-                printf("Bye\n");
+//                printf("Bye\n");
                 running = false;
             }
         }

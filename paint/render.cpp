@@ -11,9 +11,14 @@
 using namespace std;
 
 Screen PaintScreen;
-Object toolbars, file, attribute, object, view;
+Pane toolbars, file, attribute, object, view;
 
-void loadAsset(string FILENAME, Object& OBJECT) {
+// Airplane* airplane = new Airplane(top, white, -1);
+extern point mousePosition;
+color white = {255, 255, 255, 0};
+Pointer* pointer = new Pointer(mousePosition, white, 0, 0);
+
+void loadAsset(string FILENAME, Pane& OBJECT) {
     ifstream imageFile;
 
     imageFile.open(FILENAME, ios::in);
@@ -44,25 +49,31 @@ void initPaint() {
 
     // load assets
     loadAsset(TOOLBARS_ASSET, toolbars);
+    loadAsset(ATTRIBUTE_ASSET, attribute);
+    loadAsset(FILE_ASSET, file);
+    loadAsset(OBJECT_ASSET, object);
+    loadAsset(VIEW_ASSET, view);
 }
 
 // refresh the screen after changes caused by event
 void refresh() {
+    drawCanvas();
+    drawToolbar();
+    drawCursor();
+}
+
+// load the cursor (top-left is (0,0)
+void drawCursor() {
+    drawPicture(pointer->getDrawPoint(), mousePosition, pointer->getColor());
+}
+
+// load the toolbar and screen
+void drawToolbar() {
     for (int i = 0; i < SCREEN_HEIGHT && i < toolbars.height; ++i) {
         for (int j = 0; j < SCREEN_WIDTH && j < toolbars.width; ++j) {
             draw_dot((unsigned short) j, (unsigned short) i, &(toolbars.colours[j][i]));
         }
     }
-}
-
-// load the cursor (top-left is (0,0)
-void drawCursor() {
-
-}
-
-// load the toolbar and screen
-void drawToolbar() {
-
 }
 
 // load the canvas
