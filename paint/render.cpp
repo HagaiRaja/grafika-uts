@@ -15,7 +15,10 @@ Pane toolbars, file, attribute, object, view;
 
 // Airplane* airplane = new Airplane(top, white, -1);
 extern point mousePosition;
+extern int activeToolbarIndex;
+extern point canvasSize;
 color white = {255, 255, 255, 0};
+color black = {0, 0, 0, 0};
 Pointer* pointer = new Pointer(mousePosition, white, 0, 0);
 
 void loadAsset(string FILENAME, Pane& OBJECT) {
@@ -44,7 +47,6 @@ void initPaint() {
     init();
 
     // setting up background color to black
-    color black = {0, 0, 0, 0};
     set_background(&black);
 
     // load assets
@@ -74,9 +76,51 @@ void drawToolbar() {
             draw_dot((unsigned short) j, (unsigned short) i, &(toolbars.colours[j][i]));
         }
     }
+
+    if (activeToolbarIndex == 1) {
+        for (int i = 0; i < SCREEN_HEIGHT && i < file.height; ++i) {
+            for (int j = 0; j < SCREEN_WIDTH && j < file.width; ++j) {
+                draw_dot((unsigned short) j, (unsigned short) i+53, &(file.colours[j][i]));
+            }
+        }
+    }
+
+    else if (activeToolbarIndex == 3) {
+        for (int i = 0; i < SCREEN_HEIGHT && i < attribute.height; ++i) {
+            for (int j = 0; j < SCREEN_WIDTH && j < attribute.width; ++j) {
+                draw_dot((unsigned short) j + 322, (unsigned short) i+53, &(attribute.colours[j][i]));
+            }
+        }
+    }
+
+    else if (activeToolbarIndex == 4) {
+        for (int i = 0; i < SCREEN_HEIGHT && i < object.height; ++i) {
+            for (int j = 0; j < SCREEN_WIDTH && j < object.width; ++j) {
+                draw_dot((unsigned short) j + 535, (unsigned short) i+53, &(object.colours[j][i]));
+            }
+        }
+    }
+
+    else if (activeToolbarIndex == 2) {
+        for (int i = 0; i < SCREEN_HEIGHT && i < view.height; ++i) {
+            for (int j = 0; j < SCREEN_WIDTH && j < view.width; ++j) {
+                draw_dot((unsigned short) j + 161, (unsigned short) i+53, &(view.colours[j][i]));
+            }
+        }
+    }
 }
 
 // load the canvas
 void drawCanvas() {
+    for (int i = 0; i < SCREEN_HEIGHT && i < canvasSize.y; ++i) {
+        for (int j = 0; j < SCREEN_WIDTH && j < canvasSize.x; ++j) {
+            draw_dot((unsigned short) j + 14, (unsigned short) i + 67, &white);
+        }
+    }
 
+    for (int i = 0; i < SCREEN_HEIGHT && i < 10; ++i) {
+        for (int j = 0; j < SCREEN_WIDTH && j < 10; ++j) {
+            draw_dot((unsigned short) j + canvasSize.y + 9, (unsigned short) i + canvasSize.x + 62, &black);
+        }
+    }
 }
