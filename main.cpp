@@ -13,7 +13,7 @@ int main() {
     initPaint();
 
     // launching thread
-    thread threadMouse(readMouse, 1);
+    // thread threadMouse(readMouse, 1);
     thread threadKeyboard(readKeyboard, 1);
 
     // reading input, press x to close
@@ -22,7 +22,7 @@ int main() {
         refresh();
     }
 
-    threadMouse.join();
+    // threadMouse.join();
     threadKeyboard.join();
 
     close_buffer_without_read();
@@ -33,7 +33,7 @@ int main() {
 // For mouse input
 // change filename to your own system settings
 void readMouse(int Z) {
-    int fd = open("/dev/input/event18", O_RDONLY);
+    int fd = open("/dev/input/event17", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
@@ -77,6 +77,26 @@ void readKeyboard(int Z) {
             if (ev.code == 45) {
 //                printf("Bye\n");
                 running = false;
+            }
+            else if (ev.code == 103) { // UP
+                if (mousePosition.y > 0) {
+                    mousePosition.y -= (double) ev.value;
+                }
+            }
+            else if (ev.code == 108) { // DOWN
+              if (mousePosition.y < SCREEN_HEIGHT) {
+                mousePosition.y += (double) ev.value;
+              }
+            }
+            else if (ev.code == 106) { // RIGHT
+              if (mousePosition.x < SCREEN_WIDTH) {
+                mousePosition.x += (double) ev.value;
+              }
+            }
+            else if (ev.code == 105) { // LEFT
+              if (mousePosition.x > 0) {
+                mousePosition.x -= (double) ev.value;
+              }
             }
         }
     }
