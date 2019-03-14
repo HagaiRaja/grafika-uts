@@ -70,7 +70,6 @@ void draw_dot(unsigned short x, unsigned short y, color* c)
 		return ;
 	}
 
-
     long int position = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
        (y + vinfo.yoffset) * finfo.line_length;
     if(vinfo.bits_per_pixel == 32){
