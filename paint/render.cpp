@@ -15,8 +15,8 @@ Pane toolbars, file, attribute, object, view;
 
 // Airplane* airplane = new Airplane(top, white, -1);
 extern point mousePosition;
-color white = {255, 255, 255, 0};
-Pointer* pointer = new Pointer(mousePosition, white, 0, 0);
+color black = {0, 0, 0, 0};
+Pointer* pointer = new Pointer(mousePosition, black, 0, 0);
 
 void loadAsset(string FILENAME, Pane& OBJECT) {
     ifstream imageFile;
