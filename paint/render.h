@@ -3,13 +3,20 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "command.h"
+
+#include "../graphics/draw.hpp"
 #include "../object/pointer/pointer.h"
 #include <iostream>
 #include <list>
 #include <math.h>
 #include <string>
 using namespace std;
+
+
+#define CORNER_COLOR 52
+#define  HORIZONTAL_COLOR 51
+#define  VERTICAL_COLOR 50
+#define OFF_SET_FROM_TOOLBAR 57
 
 typedef struct{
     color colours[SCREEN_WIDTH][SCREEN_HEIGHT];        // define all the color of the object
@@ -36,6 +43,9 @@ void drawToolbar();
 
 // load the canvas
 void drawCanvas();
+
+// load the background, change the color inside this function
+void drawBackground();
 
 
 #endif

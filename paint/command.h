@@ -3,7 +3,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "../graphics/draw.hpp"
+#include "render.h"
 #include <iostream>
 #include <thread>
 #include <fcntl.h>    /* For O_RDWR */
@@ -16,5 +16,8 @@
 
 // void save();
 // ...
+
+void checkToolbar(input_event ev);
+void checkScale(input_event ev);
 
 #endif

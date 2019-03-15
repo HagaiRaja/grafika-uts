@@ -1,12 +1,12 @@
 from PIL import Image
 
-im = Image.open('view.jpg', 'r')
+im = Image.open('toolbar.jpg', 'r')
 pix_val = list(im.getdata())
 pix_val_flat = [x for sets in pix_val for x in sets]
 
 print(im.size)
 
-file = open('view.txt','w')
+file = open('toolbar.txt','w')
 file.write(str(im.size[0]))
 file.write(" ")
 file.write(str(im.size[1]))

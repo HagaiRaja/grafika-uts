@@ -1,15 +1,16 @@
 #include "paint/command.h"
 #include "paint/render.h"
+#include <future>           // std::async, std::future
 
 using namespace std;
 
 bool running;
 point mousePosition = {0,0};
-point canvasSize = {600,600};
 int activeToolbarIndex = 0;
+Pane toolbars, file, attribute, object, view, canvas;
 void readMouse(int Z);
 void readKeyboard(int Z);
-bool event;
+bool event, mousePressed;
 
 int main() {
     running = true;
@@ -69,64 +70,12 @@ void readMouse(int Z) {
         }
         // Read Mouse Clicks
         else if (ev.type == 1) {
+            mousePressed = true;
+            color temp = getPixelColor((unsigned short) mousePosition.x, (unsigned short) mousePosition.y);
+//            cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
             if (ev.code == 272 && ev.value == 1) {
-                cout << mousePosition.x << " " << mousePosition.y << endl;
-                // File Menu Clicked
-                if (mousePosition.x < 161 && mousePosition.y < 53) {
-                    if (activeToolbarIndex == 1) {
-                        activeToolbarIndex = 0;
-                    }
-                    else {
-                        activeToolbarIndex = 1;
-                    }
-                }
-                // View Menu Clicked
-                else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y < 53) {
-                    if (activeToolbarIndex == 2) {
-                        activeToolbarIndex = 0;
-                    }
-                    else {
-                        activeToolbarIndex = 2;
-                    }
-                }
-                // Attribute Menu Clicked
-                else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y < 53) {
-                    if (activeToolbarIndex == 3) {
-                        activeToolbarIndex = 0;
-                    }
-                    else {
-                        activeToolbarIndex = 3;
-                    }
-                }
-                // Object Menu Clicked
-                else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y < 53) {
-                    if (activeToolbarIndex == 4) {
-                        activeToolbarIndex = 0;
-                    }
-                    else {
-                        activeToolbarIndex = 4;
-                    }
-                }
-                // Canvas Scale Box Clicked
-                else if (mousePosition.x >= canvasSize.x + 9 && mousePosition.x < canvasSize.x + 19 && mousePosition.y >= canvasSize.y + 62 && mousePosition.y < canvasSize.y + 72) {
-                    bool scaleBoxClicked = true;
-                    while (scaleBoxClicked) {
-                        if (ev.code == 0) {
-                            canvasSize.x += (double) ev.value;
-                        }
-                        else if (ev.code == 1) {
-                            canvasSize.y += (double) ev.value;
-                        }
-
-                        if (ev.type == 1 && ev.value == 0) {
-                            scaleBoxClicked = false;
-                        }
-                    }
-                }
-                // Other Areas Clicked
-                else {
-                    activeToolbarIndex = 0;
-                }
+                checkToolbar(ev);
+//                thread mouseScaleUpdate(checkScale, ev);
             }
         }
     }
@@ -177,6 +126,18 @@ void readKeyboard(int Z) {
                 else {
                     activeToolbarIndex = 4;
                 }
+            }
+            else if (ev.code == 17 && ev.value == 1) { // W
+                canvas.height -= 5;
+            }
+            else if (ev.code == 30 && ev.value == 1) { // A
+                canvas.width -= 5;
+            }
+            else if (ev.code == 31 && ev.value == 1) { // S
+                canvas.height += 5;
+            }
+            else if (ev.code == 32 && ev.value == 1) { // D
+                canvas.width += 5;
             }
             else if (ev.code == 45) {
 //                printf("Bye\n");

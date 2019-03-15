@@ -1,6 +1,6 @@
 #include "render.h"
 
-#define TOOLBARS_ASSET "asset/main.txt"
+#define TOOLBARS_ASSET "asset/toolbar.txt"
 #define ATTRIBUTE_ASSET "asset/attribute.txt"
 #define FILE_ASSET "asset/file.txt"
 #define OBJECT_ASSET "asset/object.txt"
@@ -11,15 +11,15 @@
 using namespace std;
 
 Screen PaintScreen;
-Pane toolbars, file, attribute, object, view;
+extern Pane toolbars, file, attribute, object, view, canvas;
 
 // Airplane* airplane = new Airplane(top, white, -1);
 extern point mousePosition;
 extern int activeToolbarIndex;
-extern point canvasSize;
+int edgeX, edgeY;
 color white = {255, 255, 255, 0};
 color black = {0, 0, 0, 0};
-Pointer* pointer = new Pointer(mousePosition, white, 0, 0);
+Pointer* pointer = new Pointer(mousePosition, black, 0, 0);
 
 void loadAsset(string FILENAME, Pane& OBJECT) {
     ifstream imageFile;
@@ -49,6 +49,14 @@ void initPaint() {
     // setting up background color to black
     set_background(&black);
 
+    // setting default canvas size and colour
+    canvas.width = 800; canvas.height = 500;
+    for (int i = 0; i < SCREEN_HEIGHT; ++i) {
+        for (int j = 0; j < SCREEN_WIDTH; ++j) {
+            canvas.colours[j][i] = white;
+        }
+    }
+
     // load assets
     loadAsset(TOOLBARS_ASSET, toolbars);
     loadAsset(ATTRIBUTE_ASSET, attribute);
@@ -59,6 +67,7 @@ void initPaint() {
 
 // refresh the screen after changes caused by event
 void refresh() {
+    drawBackground();
     drawCanvas();
     drawToolbar();
     drawCursor();
@@ -115,17 +124,55 @@ void drawToolbar() {
 
 // load the canvas
 void drawCanvas() {
+    // initiating
+    if (canvas.height > SCREEN_HEIGHT) {
+        edgeY = SCREEN_HEIGHT;
+    }
+    else {
+        edgeY = canvas.height;
+    }
+
+    if (canvas.width > SCREEN_WIDTH) {
+        edgeX = SCREEN_WIDTH;
+    }
+    else {
+        edgeX = canvas.width;
+    }
+
     // Drawing the White Canvas
-    for (int i = 0; i < SCREEN_HEIGHT && i < canvasSize.y; ++i) {
-        for (int j = 0; j < SCREEN_WIDTH && j < canvasSize.x; ++j) {
-            draw_dot((unsigned short) j + 14, (unsigned short) i + 67, &white);
+    for (int i = 0; i < edgeY; ++i) {
+        for (int j = 0; j < edgeX; ++j) {
+            draw_dot((unsigned short) j, (unsigned short) i + 57, &(canvas.colours[j][i]));
         }
     }
 
-    // Drawing Scale Box
-    for (int i = 0; i < SCREEN_HEIGHT && i < 10; ++i) {
-        for (int j = 0; j < SCREEN_WIDTH && j < 10; ++j) {
-            draw_dot((unsigned short) j + canvasSize.y + 9, (unsigned short) i + canvasSize.x + 62, &black);
+    // Drawing horizontal Scale Box
+    color hSide = {0,0,0, HORIZONTAL_COLOR};
+    for (int j = 0; j < edgeX; ++j) {
+        draw_dot((unsigned short) j, (unsigned short) OFF_SET_FROM_TOOLBAR + edgeY, &hSide);
+        draw_dot((unsigned short) j, (unsigned short) OFF_SET_FROM_TOOLBAR + 1 + edgeY, &hSide);
+        draw_dot((unsigned short) j, (unsigned short) OFF_SET_FROM_TOOLBAR+ 2 + edgeY, &hSide);
+    }
+
+    // Drawing vertival Scale Box
+    color vSide = {0,0,0, VERTICAL_COLOR};
+    for (int j = 0; j < edgeY; ++j) {
+        draw_dot((unsigned short) edgeX, (unsigned short) + j + OFF_SET_FROM_TOOLBAR, &vSide);
+        draw_dot((unsigned short) edgeX + 1, (unsigned short) + j + OFF_SET_FROM_TOOLBAR, &vSide);
+        draw_dot((unsigned short) edgeX + 2, (unsigned short) + j + OFF_SET_FROM_TOOLBAR, &vSide);
+    }
+
+    color corner = {255,0,0, CORNER_COLOR};
+    // Drawing corner Scale Box
+    for (int i = 0; i < 7; ++i) {
+        for (int j = 0; j < 7; ++j) {
+            draw_dot((unsigned short) edgeX + i, (unsigned short) edgeY + j + OFF_SET_FROM_TOOLBAR, &corner);
         }
     }
+}
+
+void drawBackground() {
+    color c = {217,217,217, 0};
+    // setting up background color to brown
+    set_background(&c);
 }
