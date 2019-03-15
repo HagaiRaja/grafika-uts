@@ -9,6 +9,7 @@ using namespace std;
 bool running;
 point mousePosition = {0,0};
 int activeToolbarIndex = 0;
+int activeMenuIndex = 0;
 Pane toolbars, file, attribute, object, view, canvas;
 void readMouse(int Z);
 void readKeyboard(int Z);
@@ -48,7 +49,7 @@ int main() {
 // For mouse input
 // change filename to your own system settings
 void readMouse(int Z) {
-    int fd = open("/dev/input/event6", O_RDONLY);
+    int fd = open("/dev/input/event16", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
