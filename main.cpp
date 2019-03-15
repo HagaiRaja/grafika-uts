@@ -12,12 +12,11 @@ int activeToolbarIndex = 0;
 Pane toolbars, file, attribute, object, view, canvas;
 void readMouse(int Z);
 void readKeyboard(int Z);
-bool event, mousePressed;
+bool event, mousePressed, scaleBoxClicked;
 list<point> mouseClickHistory;
 
 int now_command = DRAW_TRIANGLE;
 color now_color = {0,0,0,0};
-
 
 int main() {
     running = true;
@@ -49,7 +48,7 @@ int main() {
 // For mouse input
 // change filename to your own system settings
 void readMouse(int Z) {
-    int fd = open("/dev/input/event6", O_RDONLY);
+    int fd = open("/dev/input/event16", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
@@ -78,9 +77,9 @@ void readMouse(int Z) {
         }
         // Read Mouse Clicks
         else if (ev.type == 1) {
-            mousePressed = true;
-            color temp = getPixelColor((unsigned short) mousePosition.x, (unsigned short) mousePosition.y);
-//            cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
+            // color temp = getPixelColor((unsigned short) mousePosition.x, (unsigned short) mousePosition.y);
+            cout << mousePosition.x << " " << mousePosition.y << endl;
+            // cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
             if (ev.code == 272 && ev.value == 1) {
                 checkToolbar(ev);
                 point temp = {mousePosition.x, mousePosition.y};
@@ -89,8 +88,15 @@ void readMouse(int Z) {
                 }
                 drawCommand();
 //                thread mouseScaleUpdate(checkScale, ev);
+            
+                refresh();
+                mousePressed = true;
             }
-            refresh();
+            else if (ev.code == 272 && ev.value == 0) {
+                mousePressed = false;
+            }
+            checkToolbar(ev);
+            checkScale(ev);
         }
     }
 
@@ -100,7 +106,7 @@ void readMouse(int Z) {
 // For keyboard input read
 // change filename to your own system settings
 void readKeyboard(int Z) {
-    int fd = open("/dev/input/event4", O_RDONLY);
+    int fd = open("/dev/input/event3", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
@@ -108,7 +114,8 @@ void readKeyboard(int Z) {
         if(ev.type == 1) {
             event = true;
             // exitting
-//            printf("key %i state %i\n", ev.code, ev.value);
+//           
+            //Setting file menu status if corresponding button pressed
             if (ev.code == 2 && ev.value == 1) {
 //                cout << mousePosition.x << " " << mousePosition.y << endl;
                 if (activeToolbarIndex == 1) {
@@ -117,6 +124,7 @@ void readKeyboard(int Z) {
                     activeToolbarIndex = 1;
                 }
             }
+            //Setting view menu status if corresponding button pressed
             else if (ev.code == 3 && ev.value == 1) {
                 if (activeToolbarIndex == 2) {
                     activeToolbarIndex = 0;
@@ -125,6 +133,7 @@ void readKeyboard(int Z) {
                     activeToolbarIndex = 2;
                 }
             }
+            //Setting attribute menu status if corresponding button pressed
             else if (ev.code == 4 && ev.value == 1) {
                 if (activeToolbarIndex == 3) {
                     activeToolbarIndex = 0;
@@ -133,6 +142,7 @@ void readKeyboard(int Z) {
                     activeToolbarIndex = 3;
                 }
             }
+            //Setting object menu status if corresponding button pressed
             else if (ev.code == 5 && ev.value == 1) {
                 if (activeToolbarIndex == 4) {
                     activeToolbarIndex = 0;
