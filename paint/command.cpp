@@ -135,15 +135,19 @@ void checkMenu (input_event ev) {
         if (activeToolbarIndex == 1) {
             if (mousePosition.x < 161 && mousePosition.y >= 53 && mousePosition.y < 106) {
                 activeMenuIndex = 1;
+                clearCanvas();
             }
             else if (mousePosition.x < 161 && mousePosition.y >= 106 && mousePosition.y < 159) {
                 activeMenuIndex = 2;
+                load();
             }
             else if (mousePosition.x < 161 && mousePosition.y >= 159 && mousePosition.y < 212) {
                 activeMenuIndex = 3;
+                save();
             }
             else if (mousePosition.x < 161 && mousePosition.y >= 212 && mousePosition.y < 265) {
                 activeMenuIndex = 4;
+                running = false;
             }
         }
         else if (activeToolbarIndex == 2) {
@@ -180,7 +184,7 @@ void checkMenu (input_event ev) {
                 activeMenuIndex = 14;
             }
             else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 212 && mousePosition.y < 265) {
-                activeMenuIndex = 15;
+                activeMenuIndex     = 15;
             }
             else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 265 && mousePosition.y <318) {
                 activeMenuIndex = 16;
@@ -195,12 +199,15 @@ void checkMenu (input_event ev) {
         else if (activeToolbarIndex == 4) {
             if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 53 && mousePosition.y < 106) {
                 activeMenuIndex = 19;
+                now_command = DRAW_LINE;
             }
             else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 106 && mousePosition.y < 159) {
                 activeMenuIndex = 20;
+                now_command = DRAW_TRIANGLE;
             }
             else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 159 && mousePosition.y < 212) {
                 activeMenuIndex = 21;
+                now_command = DRAW_RECTANGLE;
             }
             else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 212 && mousePosition.y < 265) {
                 activeMenuIndex = 22;
@@ -209,7 +216,7 @@ void checkMenu (input_event ev) {
                 activeMenuIndex = 23;
             }
         }
-        cout << activeMenuIndex << endl;
+//        cout << activeMenuIndex << endl;
     }
 }
 
