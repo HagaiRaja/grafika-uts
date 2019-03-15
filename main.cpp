@@ -41,7 +41,7 @@ int main() {
 // For mouse input
 // change filename to your own system settings
 void readMouse(int Z) {
-    int fd = open("/dev/input/event6", O_RDONLY);
+    int fd = open("/dev/input/event16", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
@@ -70,18 +70,19 @@ void readMouse(int Z) {
         }
         // Read Mouse Clicks
         else if (ev.type == 1) {
-            if (ev.code == 0) {
-                mousePressed = false;
-            }
-            else {
-                mousePressed = true;
-            }
-            color temp = getPixelColor((unsigned short) mousePosition.x, (unsigned short) mousePosition.y);
-//            cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
+            // color temp = getPixelColor((unsigned short) mousePosition.x, (unsigned short) mousePosition.y);
+            cout << mousePosition.x << " " << mousePosition.y << endl;
+            // cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
             if (ev.code == 272 && ev.value == 1) {
-                checkToolbar(ev);
-//                thread mouseScaleUpdate(checkScale, ev);
+                mousePressed = true;
+                cout << "Mouse is pressed" << endl;
             }
+            else if (ev.code == 272 && ev.value == 0) {
+                mousePressed = false;
+                cout << "Mouse isn't pressed" << endl;
+            }
+            checkToolbar(ev);
+            checkScale(ev);
         }
     }
 
@@ -91,7 +92,7 @@ void readMouse(int Z) {
 // For keyboard input read
 // change filename to your own system settings
 void readKeyboard(int Z) {
-    int fd = open("/dev/input/event4", O_RDONLY);
+    int fd = open("/dev/input/event3", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));

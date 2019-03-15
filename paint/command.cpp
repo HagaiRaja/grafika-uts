@@ -50,9 +50,10 @@ void checkToolbar(input_event ev) {
             activeToolbarIndex = 4;
         }
     }
+        // Scale Box Clicked
     else if (mousePosition.x >= edgeX && mousePosition.x < edgeX + 7 && mousePosition.y > edgeY + OFF_SET_FROM_TOOLBAR && mousePosition.y < edgeY + 7 + OFF_SET_FROM_TOOLBAR) {
+
         scaleBoxClicked = true;
-        
     }
     else {
         activeToolbarIndex = 0;
