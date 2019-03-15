@@ -9,6 +9,7 @@ point canvasSize = {600,600};
 int activeToolbarIndex = 0;
 void readMouse(int Z);
 void readKeyboard(int Z);
+bool event;
 
 int main() {
     running = true;
@@ -21,8 +22,11 @@ int main() {
     // reading input, press x to close
     while (running) {
         // do drawing here
+        event = false;
         refresh();
-        usleep(30000);
+        while (!event) {
+
+        }
     }
 
     threadMouse.join();
@@ -36,12 +40,14 @@ int main() {
 // For mouse input
 // change filename to your own system settings
 void readMouse(int Z) {
-    int fd = open("/dev/input/event18", O_RDONLY);
+    int fd = open("/dev/input/event6", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
 
+        // Read Mouse Movement
         if(ev.type == 2) {
+            event = true;
             if (ev.code == 0) {
                 mousePosition.x += (double) ev.value;
                 if (mousePosition.x < 0) {
@@ -61,9 +67,11 @@ void readMouse(int Z) {
                 }
             }
         }
+        // Read Mouse Clicks
         else if (ev.type == 1) {
             if (ev.code == 272 && ev.value == 1) {
                 cout << mousePosition.x << " " << mousePosition.y << endl;
+                // File Menu Clicked
                 if (mousePosition.x < 161 && mousePosition.y < 53) {
                     if (activeToolbarIndex == 1) {
                         activeToolbarIndex = 0;
@@ -72,6 +80,7 @@ void readMouse(int Z) {
                         activeToolbarIndex = 1;
                     }
                 }
+                // View Menu Clicked
                 else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y < 53) {
                     if (activeToolbarIndex == 2) {
                         activeToolbarIndex = 0;
@@ -80,6 +89,7 @@ void readMouse(int Z) {
                         activeToolbarIndex = 2;
                     }
                 }
+                // Attribute Menu Clicked
                 else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y < 53) {
                     if (activeToolbarIndex == 3) {
                         activeToolbarIndex = 0;
@@ -88,6 +98,7 @@ void readMouse(int Z) {
                         activeToolbarIndex = 3;
                     }
                 }
+                // Object Menu Clicked
                 else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y < 53) {
                     if (activeToolbarIndex == 4) {
                         activeToolbarIndex = 0;
@@ -96,16 +107,23 @@ void readMouse(int Z) {
                         activeToolbarIndex = 4;
                     }
                 }
+                // Canvas Scale Box Clicked
                 else if (mousePosition.x >= canvasSize.x + 9 && mousePosition.x < canvasSize.x + 19 && mousePosition.y >= canvasSize.y + 62 && mousePosition.y < canvasSize.y + 72) {
-                    while (ev.value == 1) {
+                    bool scaleBoxClicked = true;
+                    while (scaleBoxClicked) {
                         if (ev.code == 0) {
                             canvasSize.x += (double) ev.value;
                         }
                         else if (ev.code == 1) {
                             canvasSize.y += (double) ev.value;
                         }
+
+                        if (ev.type == 1 && ev.value == 0) {
+                            scaleBoxClicked = false;
+                        }
                     }
                 }
+                // Other Areas Clicked
                 else {
                     activeToolbarIndex = 0;
                 }
@@ -125,6 +143,7 @@ void readKeyboard(int Z) {
         read(fd, &ev, sizeof(struct input_event));
 
         if(ev.type == 1) {
+            event = true;
             // exitting
 //            printf("key %i state %i\n", ev.code, ev.value);
             if (ev.code == 2 && ev.value == 1) {

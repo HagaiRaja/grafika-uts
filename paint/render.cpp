@@ -71,12 +71,15 @@ void drawCursor() {
 
 // load the toolbar and screen
 void drawToolbar() {
+    // Draw Toolbar
     for (int i = 0; i < SCREEN_HEIGHT && i < toolbars.height; ++i) {
         for (int j = 0; j < SCREEN_WIDTH && j < toolbars.width; ++j) {
             draw_dot((unsigned short) j, (unsigned short) i, &(toolbars.colours[j][i]));
         }
     }
 
+    // If Clicked
+    // Draw File Menu
     if (activeToolbarIndex == 1) {
         for (int i = 0; i < SCREEN_HEIGHT && i < file.height; ++i) {
             for (int j = 0; j < SCREEN_WIDTH && j < file.width; ++j) {
@@ -84,7 +87,7 @@ void drawToolbar() {
             }
         }
     }
-
+    // Draw Attribute Menu
     else if (activeToolbarIndex == 3) {
         for (int i = 0; i < SCREEN_HEIGHT && i < attribute.height; ++i) {
             for (int j = 0; j < SCREEN_WIDTH && j < attribute.width; ++j) {
@@ -92,7 +95,7 @@ void drawToolbar() {
             }
         }
     }
-
+    // Draw Object Menu
     else if (activeToolbarIndex == 4) {
         for (int i = 0; i < SCREEN_HEIGHT && i < object.height; ++i) {
             for (int j = 0; j < SCREEN_WIDTH && j < object.width; ++j) {
@@ -100,7 +103,7 @@ void drawToolbar() {
             }
         }
     }
-
+    // Draw View Menu
     else if (activeToolbarIndex == 2) {
         for (int i = 0; i < SCREEN_HEIGHT && i < view.height; ++i) {
             for (int j = 0; j < SCREEN_WIDTH && j < view.width; ++j) {
@@ -112,12 +115,14 @@ void drawToolbar() {
 
 // load the canvas
 void drawCanvas() {
+    // Drawing the White Canvas
     for (int i = 0; i < SCREEN_HEIGHT && i < canvasSize.y; ++i) {
         for (int j = 0; j < SCREEN_WIDTH && j < canvasSize.x; ++j) {
             draw_dot((unsigned short) j + 14, (unsigned short) i + 67, &white);
         }
     }
 
+    // Drawing Scale Box
     for (int i = 0; i < SCREEN_HEIGHT && i < 10; ++i) {
         for (int j = 0; j < SCREEN_WIDTH && j < 10; ++j) {
             draw_dot((unsigned short) j + canvasSize.y + 9, (unsigned short) i + canvasSize.x + 62, &black);
