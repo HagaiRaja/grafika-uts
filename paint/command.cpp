@@ -24,7 +24,48 @@ void drawCommand() {
             mouseClickHistory.pop_front();
             point end = mouseClickHistory.front();
             mouseClickHistory.pop_front();
+
+            start = getPositionOnCanvas(start);
+            end = getPositionOnCanvas(end);
             drawLineOnCanvas(start, end, now_color);
+        }
+    }
+    else if (now_command == DRAW_TRIANGLE) {
+        if (mouseClickHistory.size() == 3) {
+            point start = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+            point mid = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+            point end = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+
+            start = getPositionOnCanvas(start);
+            mid = getPositionOnCanvas(mid);
+            end = getPositionOnCanvas(end);
+            drawLineOnCanvas(start, end, now_color);
+            drawLineOnCanvas(mid, end, now_color);
+            drawLineOnCanvas(start, mid, now_color);
+        }
+    }
+    else if (now_command == DRAW_RECTANGLE) {
+        if (mouseClickHistory.size() == 2) {
+            point start = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+            point end = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+
+            start = getPositionOnCanvas(start);
+            end = getPositionOnCanvas(end);
+
+            point
+                topLeft =  {start.x, start.y},
+                topRight = {start.x, end.y},
+                bottomLeft = {end.x, end.y},
+                bottomRight = {end.x, start.y};
+            drawLineOnCanvas(topLeft, topRight, now_color);
+            drawLineOnCanvas(topRight, bottomLeft, now_color);
+            drawLineOnCanvas(bottomLeft, bottomRight, now_color);
+            drawLineOnCanvas(bottomRight, topLeft, now_color);
         }
     }
 //    cout << "woi" << endl;

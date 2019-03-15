@@ -19,15 +19,18 @@
 #define DRAW_TRIANGLE 2
 #define DRAW_POLYGON 3
 #define PAINT_BUCKET 4
+#define DRAW_RECTANGLE 5
 
-
-// void save();
-// ...
+// save and load
+void save();
+void load();
 
 void checkToolbar(input_event ev);
 void checkScale(input_event ev);
 
 // calling for command
 void drawCommand();
+
+
 
 #endif

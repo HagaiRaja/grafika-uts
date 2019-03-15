@@ -8,6 +8,13 @@
 #include "../graphics/draw.hpp"
 #include "render.h"
 
+
+// get position on canvas
+point getPositionOnCanvas(point p);
+
+// check position on canvas
+bool checkInCanvas(point p);
+
 // drawing a dot on positin (x,y) with given color c
 void drawDotOnCanvas(unsigned short x, unsigned short y, color c);
 

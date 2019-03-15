@@ -15,7 +15,7 @@ void readKeyboard(int Z);
 bool event, mousePressed;
 list<point> mouseClickHistory;
 
-int now_command = DRAW_LINE;
+int now_command = DRAW_TRIANGLE;
 color now_color = {0,0,0,0};
 
 
@@ -84,10 +84,13 @@ void readMouse(int Z) {
             if (ev.code == 272 && ev.value == 1) {
                 checkToolbar(ev);
                 point temp = {mousePosition.x, mousePosition.y};
-                mouseClickHistory.push_back(temp);
+                if (checkInCanvas(temp)) {
+                    mouseClickHistory.push_back(temp);
+                }
                 drawCommand();
 //                thread mouseScaleUpdate(checkScale, ev);
             }
+            refresh();
         }
     }
 
@@ -150,11 +153,33 @@ void readKeyboard(int Z) {
             else if (ev.code == 32 && ev.value == 1) { // D
                 canvas.width += 5;
             }
+            else if (ev.code == 18 && ev.value == 1) { // E
+                now_command = DRAW_LINE;
+            }
+            else if (ev.code == 19 && ev.value == 1) { // R
+                now_command = DRAW_TRIANGLE;
+            }
+            else if (ev.code == 20 && ev.value == 1) { // T
+                now_command = DRAW_RECTANGLE;
+            }
+            else if (ev.code == 21 && ev.value == 1) { // Y
+                now_command = PAINT_BUCKET;
+            }
+            else if (ev.code == 22 && ev.value == 1) { // U
+//                now_command = 5;
+            }
+            else if (ev.code == 23 && ev.value == 1) { // I
+                save();
+            }
+            else if (ev.code == 24 && ev.value == 1) { // O
+                load();
+            }
             else if (ev.code == 45) {
 //                printf("Bye\n");
                 running = false;
             }
         }
+        refresh();
     }
 
     cout << "bye from keyboard" << endl;

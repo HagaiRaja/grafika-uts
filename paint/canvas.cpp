@@ -6,6 +6,28 @@
 
 extern Pane toolbars, file, attribute, object, view, canvas;
 
+int offsetX = 0, offsetY = OFF_SET_FROM_TOOLBAR;
+
+// check position on canvas
+bool checkInCanvas(point p) {
+    if (p.x > offsetX && p.x < offsetX + canvas.width
+        && p.y > offsetY && p.y < offsetY + canvas.height) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// get position on canvas
+point getPositionOnCanvas(point p) {
+    point temp = {
+        p.x - offsetX,
+        p.y - offsetY
+    };
+
+    return temp;
+}
 
 // drawing a dot on positin (x,y) with given color c
 void drawDotOnCanvas(unsigned short x, unsigned short y, color c) {
