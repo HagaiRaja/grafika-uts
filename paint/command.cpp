@@ -7,7 +7,7 @@
 //    unsigned int value;
 //};
 
-extern bool running, mousePressed;
+extern bool running, mousePressed, scaleBoxClicked;
 extern point mousePosition;
 extern int activeToolbarIndex;
 extern Pane toolbars, file, attribute, object, view, canvas;
@@ -50,6 +50,10 @@ void checkToolbar(input_event ev) {
             activeToolbarIndex = 4;
         }
     }
+    else if (mousePosition.x >= edgeX && mousePosition.x < edgeX + 7 && mousePosition.y > edgeY + OFF_SET_FROM_TOOLBAR && mousePosition.y < edgeY + 7 + OFF_SET_FROM_TOOLBAR) {
+        scaleBoxClicked = true;
+        
+    }
     else {
         activeToolbarIndex = 0;
     }
@@ -57,11 +61,9 @@ void checkToolbar(input_event ev) {
 
 void checkScale(input_event ev) {
     // Canvas Scale Corner click
-    if (mousePosition.x >= edgeX && mousePosition.x < edgeX + 7 && mousePosition.y > edgeY + OFF_SET_FROM_TOOLBAR && mousePosition.y < edgeY + 7 + OFF_SET_FROM_TOOLBAR) {
-        while (mousePressed) {
-        }
-
-        canvas.height = mousePosition.y;
+    if (!mousePressed && scaleBoxClicked) {
+        scaleBoxClicked = false;
         canvas.width = mousePosition.x;
+        canvas.height = mousePosition.y;
     }
 }
