@@ -128,3 +128,12 @@ void checkScale(input_event ev) {
         canvas.height = mousePosition.y;
     }
 }
+
+// save and load
+void save() {
+
+}
+
+void load() {
+    
+}

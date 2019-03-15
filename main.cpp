@@ -15,7 +15,7 @@ void readKeyboard(int Z);
 bool event, mousePressed, scaleBoxClicked;
 list<point> mouseClickHistory;
 
-int now_command = DRAW_TRIANGLE;
+int now_command = DRAW_LINE;
 color now_color = {0,0,0,0};
 
 int main() {
@@ -48,7 +48,7 @@ int main() {
 // For mouse input
 // change filename to your own system settings
 void readMouse(int Z) {
-    int fd = open("/dev/input/event16", O_RDONLY);
+    int fd = open("/dev/input/event6", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
@@ -106,7 +106,7 @@ void readMouse(int Z) {
 // For keyboard input read
 // change filename to your own system settings
 void readKeyboard(int Z) {
-    int fd = open("/dev/input/event3", O_RDONLY);
+    int fd = open("/dev/input/event4", O_RDONLY);
     struct input_event ev;
     while (running) {
         read(fd, &ev, sizeof(struct input_event));
