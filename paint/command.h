@@ -27,6 +27,7 @@ void load();
 
 void checkToolbar(input_event ev);
 void checkScale(input_event ev);
+void checkMenu(input_event ev);
 
 // calling for command
 void drawCommand();

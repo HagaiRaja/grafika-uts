@@ -9,7 +9,7 @@
 
 extern bool running, mousePressed, scaleBoxClicked;
 extern point mousePosition;
-extern int activeToolbarIndex;
+extern int activeToolbarIndex, activeMenuIndex;
 extern Pane toolbars, file, attribute, object, view, canvas;
 extern int edgeX, edgeY;
 extern list<point> mouseClickHistory;
@@ -111,6 +111,7 @@ void checkToolbar(input_event ev) {
         }
     }
     else {
+        checkMenu(ev);
         activeToolbarIndex = 0;
     }
 }
@@ -125,6 +126,90 @@ void checkScale(input_event ev) {
         scaleBoxClicked = false;
         canvas.width = mousePosition.x;
         canvas.height = mousePosition.y;
+    }
+}
+
+void checkMenu (input_event ev) {
+    if (ev.value == 1) {
+        // Check per menu, ranged from 1 - 23. Numbering starts from the left and upmost menu
+        if (activeToolbarIndex == 1) {
+            if (mousePosition.x < 161 && mousePosition.y >= 53 && mousePosition.y < 106) {
+                activeMenuIndex = 1;
+            }
+            else if (mousePosition.x < 161 && mousePosition.y >= 106 && mousePosition.y < 159) {
+                activeMenuIndex = 2;
+            }
+            else if (mousePosition.x < 161 && mousePosition.y >= 159 && mousePosition.y < 212) {
+                activeMenuIndex = 3;
+            }
+            else if (mousePosition.x < 161 && mousePosition.y >= 212 && mousePosition.y < 265) {
+                activeMenuIndex = 4;
+            }
+        }
+        else if (activeToolbarIndex == 2) {
+            if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 53 && mousePosition.y < 106) {
+                activeMenuIndex = 5;
+            }
+            else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 106 && mousePosition.y < 159) {
+                activeMenuIndex = 6;
+            }
+            else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 159 && mousePosition.y < 212) {
+                activeMenuIndex = 7;
+            }
+            else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 212 && mousePosition.y < 265) {
+                activeMenuIndex = 8;
+            }
+            else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 265 && mousePosition.y <318) {
+                activeMenuIndex = 9;
+            }
+            else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 318 && mousePosition.y < 371) {
+                activeMenuIndex = 10;
+            }
+            else if (mousePosition.x >= 161 && mousePosition.x < 322 && mousePosition.y >= 371 && mousePosition.y < 424) {
+                activeMenuIndex = 11;
+            }
+        }
+        else if (activeToolbarIndex == 3) {
+            if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 53 && mousePosition.y < 106) {
+                activeMenuIndex = 12;
+            }
+            else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 106 && mousePosition.y < 159) {
+                activeMenuIndex = 13;
+            }
+            else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 159 && mousePosition.y < 212) {
+                activeMenuIndex = 14;
+            }
+            else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 212 && mousePosition.y < 265) {
+                activeMenuIndex = 15;
+            }
+            else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 265 && mousePosition.y <318) {
+                activeMenuIndex = 16;
+            }
+            else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 318 && mousePosition.y < 371) {
+                activeMenuIndex = 17;
+            }
+            else if (mousePosition.x >= 322 && mousePosition.x < 535 && mousePosition.y >= 371 && mousePosition.y < 424) {
+                activeMenuIndex = 18;
+            }
+        }
+        else if (activeToolbarIndex == 4) {
+            if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 53 && mousePosition.y < 106) {
+                activeMenuIndex = 19;
+            }
+            else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 106 && mousePosition.y < 159) {
+                activeMenuIndex = 20;
+            }
+            else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 159 && mousePosition.y < 212) {
+                activeMenuIndex = 21;
+            }
+            else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 212 && mousePosition.y < 265) {
+                activeMenuIndex = 22;
+            }
+            else if (mousePosition.x >= 535 && mousePosition.x < 722 && mousePosition.y >= 265 && mousePosition.y <318) {
+                activeMenuIndex = 23;
+            }
+        }
+        cout << activeMenuIndex << endl;
     }
 }
 
