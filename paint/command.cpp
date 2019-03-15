@@ -12,6 +12,25 @@ extern point mousePosition;
 extern int activeToolbarIndex;
 extern Pane toolbars, file, attribute, object, view, canvas;
 extern int edgeX, edgeY;
+extern list<point> mouseClickHistory;
+extern int now_command;
+extern color now_color;
+
+// calling for command
+void drawCommand() {
+    if (now_command == DRAW_LINE) {
+        if (mouseClickHistory.size() == 2) {
+            point start = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+            point end = mouseClickHistory.front();
+            mouseClickHistory.pop_front();
+            drawLineOnCanvas(start, end, now_color);
+        }
+    }
+//    cout << "woi" << endl;
+//    drawDotOnCanvas(10 + now_command,10 + now_command, now_color);
+//    now_command +=1;
+}
 
 void checkToolbar(input_event ev) {
     // File Menu Clicked

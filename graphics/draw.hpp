@@ -20,6 +20,9 @@ typedef struct{
     double degree; // range between 0-360. North is 0
 } cube;
 
+// given a number and return the absolut value
+unsigned short absolute (double a);
+
 // Drawing line from point p to point q with given color c
 void drawLine(point p, point q, color* c);
 

@@ -1,5 +1,5 @@
 # Masukkan semua file c Anda
-OBJS = graphics/frame_buffer.c graphics/draw.cpp paint/command.cpp paint/render.cpp object/object.cpp object/pointer/pointer.cpp main.cpp
+OBJS = graphics/frame_buffer.c graphics/draw.cpp paint/command.cpp paint/render.cpp paint/canvas.cpp object/object.cpp object/pointer/pointer.cpp main.cpp
 
 # frame_buffer.c draw.c object.cpp sample_object.cpp driver_sampleObject.cpp
 

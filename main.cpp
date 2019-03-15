@@ -1,6 +1,8 @@
 #include "paint/command.h"
 #include "paint/render.h"
+#include "paint/canvas.h"
 #include <future>           // std::async, std::future
+#include <list>
 
 using namespace std;
 
@@ -11,9 +13,15 @@ Pane toolbars, file, attribute, object, view, canvas;
 void readMouse(int Z);
 void readKeyboard(int Z);
 bool event, mousePressed;
+list<point> mouseClickHistory;
+
+int now_command = DRAW_LINE;
+color now_color = {0,0,0,0};
+
 
 int main() {
     running = true;
+    mouseClickHistory.clear();
     initPaint();
 
     // launching thread
@@ -75,6 +83,9 @@ void readMouse(int Z) {
 //            cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
             if (ev.code == 272 && ev.value == 1) {
                 checkToolbar(ev);
+                point temp = {mousePosition.x, mousePosition.y};
+                mouseClickHistory.push_back(temp);
+                drawCommand();
 //                thread mouseScaleUpdate(checkScale, ev);
             }
         }
