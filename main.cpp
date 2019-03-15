@@ -78,7 +78,7 @@ void readMouse(int Z) {
         // Read Mouse Clicks
         else if (ev.type == 1) {
             // color temp = getPixelColor((unsigned short) mousePosition.x, (unsigned short) mousePosition.y);
-            cout << mousePosition.x << " " << mousePosition.y << endl;
+//            cout << mousePosition.x << " " << mousePosition.y << endl;
             // cout << temp.r << " " << temp.g << " " << temp.b << " " << temp.a << endl;
             if (ev.code == 272 && ev.value == 1) {
                 checkToolbar(ev);
@@ -183,6 +183,9 @@ void readKeyboard(int Z) {
             }
             else if (ev.code == 24 && ev.value == 1) { // O
                 load();
+            }
+            else if (ev.code == 49 && ev.value == 1) { // N
+                clearCanvas();
             }
             else if (ev.code == 45) {
 //                printf("Bye\n");

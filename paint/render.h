@@ -17,6 +17,8 @@ using namespace std;
 #define  HORIZONTAL_COLOR 51
 #define  VERTICAL_COLOR 50
 #define OFF_SET_FROM_TOOLBAR 57
+#define CANVAS_INIT_WIDTH 800
+#define CANVAS_INIT_HEIGHT 500
 
 typedef struct{
     color colours[SCREEN_WIDTH][SCREEN_HEIGHT];        // define all the color of the object

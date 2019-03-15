@@ -130,9 +130,50 @@ void checkScale(input_event ev) {
 
 // save and load
 void save() {
+    // open a file in write mode.
+    ofstream outfile;
+    outfile.open("paint.txt");
 
+    outfile << canvas.width << " " << canvas.height << endl;
+    for (int i = 0; i < SCREEN_HEIGHT; ++i) {
+        for (int j = 0; j < SCREEN_WIDTH; ++j) {
+            outfile << (int) canvas.colours[j][i].r << " " << (int) canvas.colours[j][i].g << " " <<
+                    (int) canvas.colours[j][i].b << " " << (int) canvas.colours[j][i].a << endl;
+        }
+    }
+
+    outfile.close();
 }
 
 void load() {
-    
+    // open a file in write mode.
+    ifstream outfile;
+    outfile.open("paint.txt");
+    int r,g,b,a;
+
+    outfile >> canvas.width >> canvas.height;
+    for (int i = 0; i < SCREEN_HEIGHT; ++i) {
+        for (int j = 0; j < SCREEN_WIDTH; ++j) {
+            outfile >> r >> g >> b >> a;
+            canvas.colours[j][i].r = (unsigned char) r;
+            canvas.colours[j][i].g = (unsigned char) g;
+            canvas.colours[j][i].b = (unsigned char) b;
+            canvas.colours[j][i].a = (unsigned char) a;
+        }
+    }
+
+    outfile.close();
+}
+
+// new canvas
+void clearCanvas() {
+    canvas.width = CANVAS_INIT_WIDTH;
+    canvas.height = CANVAS_INIT_HEIGHT;
+    color white = {255, 255, 255, 0};
+
+    for (int i = 0; i < SCREEN_HEIGHT; ++i) {
+        for (int j = 0; j < SCREEN_WIDTH; ++j) {
+            canvas.colours[j][i] = white;
+        }
+    }
 }

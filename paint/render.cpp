@@ -50,7 +50,7 @@ void initPaint() {
     set_background(&black);
 
     // setting default canvas size and colour
-    canvas.width = 800; canvas.height = 500;
+    canvas.width = CANVAS_INIT_WIDTH; canvas.height = CANVAS_INIT_HEIGHT;
     for (int i = 0; i < SCREEN_HEIGHT; ++i) {
         for (int j = 0; j < SCREEN_WIDTH; ++j) {
             canvas.colours[j][i] = white;

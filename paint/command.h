@@ -25,6 +25,9 @@
 void save();
 void load();
 
+// new canvas
+void clearCanvas();
+
 void checkToolbar(input_event ev);
 void checkScale(input_event ev);
 
